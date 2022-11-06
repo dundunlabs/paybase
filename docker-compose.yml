@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  rest:
+    image: openjdk:17-jdk-alpine
+    command: ./mvnw spring-boot:run
+    working_dir: /myapp
+    tty: true
+    volumes:
+      - ./rest:/myapp
+      - $HOME/.m2/openjdk-17:/root/.m2
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./rest/.env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./rest/tmp/postgres:/var/lib/postgresql/data
+    env_file:
+      - ./rest/.env
