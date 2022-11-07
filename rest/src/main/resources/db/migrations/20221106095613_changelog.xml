@@ -1,0 +1,50 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="root (generated)" id="1667728584798-1">
+        <createTable tableName="project_wallets">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="project_walletsPK"/>
+            </column>
+            <column name="config" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="project_id" type="BIGINT"/>
+            <column name="wallet_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1667728584798-2">
+        <createTable tableName="projects">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="projectsPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1667728584798-3">
+        <createTable tableName="wallets">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="walletsPK"/>
+            </column>
+            <column name="code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="root (generated)" id="1667728584798-4">
+        <addUniqueConstraint columnNames="code" constraintName="UC_WALLETSCODE_COL" tableName="wallets"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1667728584798-5">
+        <addUniqueConstraint columnNames="project_id, wallet_id" constraintName="UKdw8rshx33a7omewqs6olqhguu" tableName="project_wallets"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1667728584798-6">
+        <addForeignKeyConstraint baseColumnNames="wallet_id" baseTableName="project_wallets" constraintName="FK4mg48j0oiisht0su21rskrgem" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="wallets" validate="true"/>
+    </changeSet>
+    <changeSet author="root (generated)" id="1667728584798-7">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_wallets" constraintName="FKe2207on101tb6omwcvqe6o71s" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="projects" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
